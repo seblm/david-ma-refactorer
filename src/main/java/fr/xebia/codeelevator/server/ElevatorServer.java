@@ -30,7 +30,7 @@ class ElevatorServer implements HttpHandler {
         Map<String, String> parameters = extractParameters(requestURI);
         switch (requestURI.getPath()) {
             case "/reset":
-                elevator.reset(parameters.get("cause"));
+                elevator.reset(parameters.get("cause"), parameters.get("lowerFloor"), parameters.get("higherFloor"));
                 httpExchange.sendResponseHeaders(200, 0);
                 break;
             case "/call":

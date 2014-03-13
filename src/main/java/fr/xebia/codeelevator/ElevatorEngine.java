@@ -1,27 +1,51 @@
 package fr.xebia.codeelevator;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
-
 public class ElevatorEngine {
-    private List<Command> commands = asList(
-            Command.OPEN, Command.CLOSE, Command.UP,
-            Command.OPEN, Command.CLOSE, Command.UP,
-            Command.OPEN, Command.CLOSE, Command.UP,
-            Command.OPEN, Command.CLOSE, Command.UP,
-            Command.OPEN, Command.CLOSE, Command.UP,
-            Command.OPEN, Command.CLOSE, Command.DOWN,
-            Command.OPEN, Command.CLOSE, Command.DOWN,
-            Command.OPEN, Command.CLOSE, Command.DOWN,
-            Command.OPEN, Command.CLOSE, Command.DOWN,
-            Command.OPEN, Command.CLOSE, Command.DOWN
-    );
+    private static final int DEFAULT_LOWER_FLOOR = 0;
+    private static final int DEFAULT_HIGHER_FLOOR = 5;
 
-    private int currentCommand = -1;
+    private int lowerFloor = DEFAULT_LOWER_FLOOR;
+    private int higherFloor = DEFAULT_HIGHER_FLOOR;
+    private Direction currentDirection;
+    private Command currentCommand;
+    private int floor;
+
+    public ElevatorEngine() {
+        reset("", Integer.toString(DEFAULT_LOWER_FLOOR), Integer.toString(DEFAULT_HIGHER_FLOOR));
+    }
 
     public Command nextCommand() {
-        return commands.get(currentCommand++ % commands.size());
+        switch (currentCommand) {
+            case OPEN:
+                currentCommand = Command.CLOSE;
+                break;
+            case CLOSE:
+                switch (currentDirection) {
+                    case UP:
+                        if (floor == higherFloor) {
+                            currentDirection = Direction.DOWN;
+                        }
+                        break;
+                    case DOWN:
+                        if (floor == lowerFloor) {
+                            currentDirection = Direction.UP;
+                        }
+                }
+                switch (currentDirection) {
+                    case UP:
+                        floor++;
+                        currentCommand = Command.UP;
+                        break;
+                    case DOWN:
+                        floor--;
+                        currentCommand = Command.DOWN;
+                        break;
+                }
+                break;
+            default:
+                currentCommand = Command.OPEN;
+        }
+        return currentCommand;
     }
 
     public void call(int atFloor, Direction to) {
@@ -36,7 +60,11 @@ public class ElevatorEngine {
     public void userHasExited() {
     }
 
-    public void reset(String cause) {
-        currentCommand = -1;
+    public void reset(String cause, String lowerFloor, String higherFloor) {
+        this.lowerFloor = lowerFloor != null ? Integer.parseInt(lowerFloor) : DEFAULT_LOWER_FLOOR;
+        this.higherFloor = higherFloor != null ? Integer.parseInt(higherFloor) : DEFAULT_HIGHER_FLOOR;
+        this.currentDirection = Direction.UP;
+        this.currentCommand = Command.UP;
+        this.floor = 0;
     }
 }
