@@ -56,6 +56,9 @@ class ElevatorServer implements HttpHandler {
                 elevator.userHasExited();
                 httpExchange.sendResponseHeaders(200, 0);
                 break;
+            default:
+                System.err.format("no route to %s%n", requestURI.getPath());
+                httpExchange.sendResponseHeaders(404, 0);
         }
         httpExchange.close();
     }
