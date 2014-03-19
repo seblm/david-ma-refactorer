@@ -30,6 +30,16 @@ Go to [server](http://localhost:8080), register client and explain
  - Modify `HTTPElevatorTest` to add `lowerFloor` and `higherFloor` parameters to `reset`
  - Relaunch server and assert that behavior is correct
 
+## step 3 : no more multithread
+
+    $ git checkout da846f724a
+
+ - `ElevatorServer` create a new `Thread` from scratch and begin with a call to `playerSynchronizer.run()`
+ - `Clock` doesn't use `executorService` anymore (test ?)
+ - `HTTPElevator` doesn't use `executorService` anymore and dot the real job at `httpGet()`
+
+    $ mvn clean install && mvn -f elevator-server jetty:run -DPLAYERS_URL="file:elevator-server/src/test/resources/users.json" -DHIGHER_FLOOR=20
+
 commits :
 
 1.0 version
