@@ -64,7 +64,7 @@ class ElevatorServer implements HttpHandler {
     }
 
     public static void main(String[] args) throws IOException {
-        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8081), 0);
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(9999), 0);
         httpServer.createContext("/", new ElevatorServer(new ElevatorEngine()));
         httpServer.start();
 
