@@ -39,10 +39,3 @@ Go to [server](http://localhost:8080), register client and explain
  - `HTTPElevator` doesn't use `executorService` anymore and dot the real job at `httpGet()`
 
     $ mvn clean install && mvn -f elevator-server jetty:run -DPLAYERS_URL="file:elevator-server/src/test/resources/users.json" -DHIGHER_FLOOR=20
-
-commits :
-
-1.0 version
-building dimensions are not fixed anymore
-Single thread ftw!
-Multi thread ftw!
