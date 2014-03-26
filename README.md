@@ -23,22 +23,33 @@ Sur le navigateur, enregistrer le client et faire une démo de l'application. Ex
 
     $ clear
 
-## step 2 : building size is not fixed
+## Étape 2 : implémenter une nouvelle règle pour gérer une taille d'immeuble non fixée
 
-    $ git checkout e73bc508be
+    $ git checkout step1
 
- - `BuildingTest` : add a test that goes UP 3 times and inject `BuildingDimensions(0, 2)`
- - repair test by addind `BuildingDimensions` to `Building` constructor
- - cover `Building.floorStates()` with `BuildingDimensions(-1, 4)`
- - verify that `Building` and `BuildingTest` doesn't uses `ElevatorEngine.LOWER_FLOOR` nor `ElevatorEngine.HIGHER_FLOOR`
- - How to launch a test with modified `BuildingDimensions` ? with system properties : write a test
- - When to initialize BuildingDimensions for all ? `ElevatorServer`. Gives this instance to `ElevatorGame` and `RandomUser`
- - Launch server and see that my client is not working
+ - `BuildingTest` : ajouter un test qui va 3 fois en haut et injecter `BuildingDimensions(0, 2)`
+ - Créer la classe `BuildingDimensions`
+ - Ajouter `BuildingDimensions` au constructeur de `Building`
+    - Dans la valeur par défaut et importer BuildingDimensions
+ - Lancer les tests
+ - Réparer
+    - À partir des tests se rendre sur `updateBuildingState`
+    - Constater qu'on utilise ElevatorEngine.LOWER_FLOOR
+    - Le supprimer des imports
+    - Modifier BuildingDimensions en conséquence
 
-    $ mvn install && mvn -f code-elevator jetty:run -DLOWER_FLOOR=-3 -DHIGHER_FLOOR=2
+ - Relancer le serveur
 
- - Modify `HTTPElevatorTest` to add `lowerFloor` and `higherFloor` parameters to `reset`
- - Relaunch server and assert that behavior is correct
+    $ mvn clean install && mvn -f elevator-server jetty:run
+
+ - Comment configurer la taille du building dans le cloud ? avec des propriétés système. Exemple :
+
+    $ mvn clean install && mvn -f elevator-server jetty:run -DHIGHER_FLOOR=10
+
+ - Écrire un test
+ - Relancer le serveur
+
+    $ mvn clean install -DskipTests && mvn -f elevator-server jetty:run -DHIGHER_FLOOR=10
 
 ## step 3 : no more multithread
 
