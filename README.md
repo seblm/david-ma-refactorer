@@ -1,17 +1,27 @@
 # David m'a refactorer
 
-## start client
+## Étape 0 : démarrer le serveur d'ascenseur
 
-    $ mvn compile && java -classpath target/classes fr.xebia.codeelevator.server.ElevatorServer
+Ouvrir nouveau terminal.
 
-## step 1 : context
+    $ java8 && mvn clean compile -f ~/src/david-ma-refactorer && java -classpath ~/src/david-ma-refactorer/target/classes fr.xebia.codeelevator.server.ElevatorServer
 
-Go to "1.0 version" and start server
+Ouvrir une nouvelle tabulation, placer le terminal à droite.
 
-    $ git checkout 370fb4d1f5
-    $ mvn install && mvn -f code-elevator jetty:run
+    $ java8 && cd src/code-elevator-dgageot && git checkout master && clear
 
-Go to [server](http://localhost:8080), register client and explain
+Ouvrir un navigateur et le mettre à gauche sur [serveur](http://localhost:8080).
+
+## Étape 1 : le contexte
+
+Aller au commit "1.0 version" et démarrer le serveur.
+
+    $ git checkout 370fb4d
+    $ mvn clean install && mvn -f elevator-server jetty:run
+
+Sur le navigateur, enregistrer le client et faire une démo de l'application. Expliquer le plan. Arrêter le serveur.
+
+    $ clear
 
 ## step 2 : building size is not fixed
 
