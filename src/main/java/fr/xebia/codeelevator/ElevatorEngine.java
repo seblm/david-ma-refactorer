@@ -11,7 +11,7 @@ public class ElevatorEngine {
     private int floor;
 
     public ElevatorEngine() {
-        reset("", Integer.toString(DEFAULT_LOWER_FLOOR), Integer.toString(DEFAULT_HIGHER_FLOOR));
+        reset("starting", Integer.toString(DEFAULT_LOWER_FLOOR), Integer.toString(DEFAULT_HIGHER_FLOOR));
     }
 
     public Command nextCommand() {
@@ -45,22 +45,28 @@ public class ElevatorEngine {
             default:
                 currentCommand = Command.OPEN;
         }
+        System.out.format("nextCommand %s%n", currentCommand);
         return currentCommand;
     }
 
     public void call(int atFloor, Direction to) {
+        System.out.format("call(%d, %s)%n", atFloor, to);
     }
 
     public void go(int floorToGo) {
+        System.out.format("go(%d)%n", floorToGo);
     }
 
     public void userHasEntered() {
+        System.out.println("userHasEntered");
     }
 
     public void userHasExited() {
+        System.out.println("userHasExited");
     }
 
     public void reset(String cause, String lowerFloor, String higherFloor) {
+        System.out.format("reset(%s, %s, %s)%n", cause, lowerFloor, higherFloor);
         this.lowerFloor = lowerFloor != null ? Integer.parseInt(lowerFloor) : DEFAULT_LOWER_FLOOR;
         this.higherFloor = higherFloor != null ? Integer.parseInt(higherFloor) : DEFAULT_HIGHER_FLOOR;
         this.currentDirection = Direction.UP;
