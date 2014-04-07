@@ -58,12 +58,16 @@ Sur le navigateur, enregistrer le client et faire une démo de l'application. Ex
 
     $ mvn clean install && mvn -f elevator-server jetty:run -DHIGHER_FLOOR=10
 
+## Étape 3 : plus de multithreading
 
+    $ gitreset && gco step3
+    $ mvn clean install && mvn -f elevator-server jetty:run
 
+Rafraîchir le serveur : oups plus d'interface. Il faut rajouter une propriété système pour lire les joueurs.
 
-## step 3 : no more multithread
+    $ mvn -f elevator-server jetty:run -DPLAYERS_URL="file:elevator-server/src/test/resources/users.json"
 
-    $ git checkout da846f724a
+Constater qu'on envoie une requête toutes les secondes.
 
  - `ElevatorServer` create a new `Thread` from scratch and begin with a call to `playerSynchronizer.run()`
  - `Clock` doesn't use `executorService` anymore (test ?)
