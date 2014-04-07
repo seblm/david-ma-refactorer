@@ -8,7 +8,7 @@ Ouvrir nouveau terminal.
 
 Ouvrir une nouvelle tabulation, placer le terminal à droite.
 
-    $ java8 && cd src/code-elevator-dgageot && git checkout master && clear
+    $ java8 && cd src/code-elevator-dgageot && gco master && clear
 
 Ouvrir un navigateur et le mettre à gauche sur [serveur](http://localhost:8080).
 
@@ -16,16 +16,17 @@ Ouvrir un navigateur et le mettre à gauche sur [serveur](http://localhost:8080)
 
 Aller au commit "1.0 version" et démarrer le serveur.
 
-    $ git checkout 370fb4d
+    $ gco step1
     $ mvn clean install && mvn -f elevator-server jetty:run
 
 Sur le navigateur, enregistrer le client et faire une démo de l'application. Expliquer le plan. Arrêter le serveur.
 
+    $ Ctrl + C
     $ clear
 
 ## Étape 2 : implémenter une nouvelle règle pour gérer une taille d'immeuble non fixée
 
-    $ git checkout step1
+    $ gco step2
 
  - `BuildingTest` : ajouter un test qui va 3 fois en haut et injecter `BuildingDimensions(0, 2)`
  - Créer la classe `BuildingDimensions`
@@ -49,7 +50,16 @@ Sur le navigateur, enregistrer le client et faire une démo de l'application. Ex
  - Écrire un test
  - Relancer le serveur
 
-    $ mvn clean install -DskipTests && mvn -f elevator-server jetty:run -DHIGHER_FLOOR=10
+    $ mvn clean install && mvn -f elevator-server jetty:run -DHIGHER_FLOOR=10
+
+ - On casse des tests car on ne restaure pas les propriétés système. Importer la `@Rule RestoreSystemProperties`.
+
+ - Relancer le serveur
+
+    $ mvn clean install && mvn -f elevator-server jetty:run -DHIGHER_FLOOR=10
+
+
+
 
 ## step 3 : no more multithread
 
